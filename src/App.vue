@@ -1,30 +1,83 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <NavBar />
+  <router-view />
 </template>
 
+<script>
+import NavBar from "@/components/NavBar.vue";
+
+export default {
+  name: "AppView",
+  components: {
+    NavBar,
+  },
+  mounted() {},
+};
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+a {
+  text-decoration: none;
+  color: black;
 }
-
-nav {
-  padding: 30px;
+button{
+  background: white;
+  min-width: 50px;
+  border-radius: 20px;
+  color: green;
 }
-
-nav a {
+button:hover{
+  transition: 0.2s;
+  background: green;
+  color: white;
+}
+.button-delete {
   font-weight: bold;
-  color: #2c3e50;
+  color: red;
+  background: white;
+  min-width: 50px;
+  border-radius: 20px;
 }
-
-nav a.router-link-exact-active {
-  color: #42b983;
+.button-delete:hover {
+  transition: 0.2s;
+  background: red;
+  color: white;
+}
+.justify-center {
+  justify-content: center;
+}
+.align-center {
+  align-items: center;
+}
+.flex {
+  padding: 5px 5px 5px 5px;
+  display: flex;
+}
+.dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10000;
+  touch-action: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card { 
+  overflow: hidden;
+  border: solid 0px;
+  border-radius: 10px;
+  background-color: white;
+}
+.body-no-scroll {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+.card-text {
+  padding: 10px;
 }
 </style>
