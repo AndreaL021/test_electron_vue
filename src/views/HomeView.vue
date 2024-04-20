@@ -222,6 +222,7 @@
 </template>
 
 <script>
+// import fs from 'fs';
 class Prodotto {
   constructor(arg = undefined) {
     if (arg != undefined) {
@@ -271,12 +272,13 @@ export default {
     dialog_delete: false,
     // Array
     prodotti: [],
+    prodotti_totali: [],
     headers: ["Modifica", "Id", "Nome", "Desc", "Img", "Elimina"],
   }),
   watch: {
-    prodotti_totali(newVal) {
-      this.prodotti = Array.from(newVal);
-    },
+    // prodotti_totali(newVal) {
+    //   this.prodotti = Array.from(newVal);
+    // },
     dialog_edit(newValue) {
       if (newValue) {
         document.body.classList.add("body-no-scroll");
@@ -306,6 +308,7 @@ export default {
         this.dialog_edit = false;
         await this.$store.dispatch("setProdotto", this.selected_item);
         this.selected_item = {};
+        this.getProdotti();
       } else {
         this.snackbar = "Inserire nome prodotto";
       }
@@ -315,13 +318,15 @@ export default {
         this.dialog_edit = false;
         await this.$store.dispatch("setProdotto", this.new_prodotto);
         this.new_prodotto = new Prodotto();
+        this.getProdotti();
       } else {
         this.snackbar = "Inserire nome prodotto";
       }
     },
-    confermaElimina() {
+    async confermaElimina() {
       this.dialog_delete = false;
-      return this.$store.dispatch("eliminaProdotto", this.selected_item);
+      await this.$store.dispatch("eliminaProdotto", this.selected_item);
+      this.getProdotti();
     },
     async handleImageUpload(item) {
       const input = document.createElement("input");
@@ -358,16 +363,18 @@ export default {
       }
       this.prodotti = Array.from(arrTemp);
     },
-  },
-  computed: {
-    prodotti_totali() {
-      return this.$store.getters.getProdotti;
+    async getProdotti() {
+      await this.$store.dispatch("getProdotti").then((res) => {
+        console.log(res);
+        this.prodotti_totali = res;
+        this.prodotti = Array.from(this.prodotti_totali);
+        console.log(this.prodotti);
+      });
     },
   },
-  mounted() {
-    if (this.prodotti_totali.length > 0) {
-      this.prodotti = Array.from(this.prodotti_totali);
-    }
+  computed: {},
+  async mounted() {
+    this.getProdotti();
   },
 };
 </script>

@@ -10,7 +10,9 @@ import Snackbar from "@/components/Snackbar.vue"
 
 library.add(fas);
 
-createApp(App).use(store).use(router)
+createApp(App)
+.use(store)
+.use(router)
 .component("fa-i", FontAwesomeIcon)
 .component("v-input", Input)
 .component("v-snackbar", Snackbar)

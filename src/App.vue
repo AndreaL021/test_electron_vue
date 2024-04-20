@@ -8,10 +8,15 @@ import NavBar from "@/components/NavBar.vue";
 
 export default {
   name: "AppView",
+  data: () => ({
+    // Variabili d'appoggio
+    test:[],
+  }),
   components: {
     NavBar,
   },
-  mounted() {},
+  mounted() {
+  },
 };
 </script>
 

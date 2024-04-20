@@ -1,13 +1,13 @@
-import { app, protocol, BrowserWindow } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
-const fs= require('fs');
+const fs = require('fs')
+const path = require('path')
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
 ])
-
 async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
@@ -15,6 +15,7 @@ async function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
+      enableRemoteModule: true
     }
   })
   win.removeMenu();
@@ -59,6 +60,44 @@ app.on('ready', async () => {
   }
   createWindow()
 })
+ipcMain.handle("getProdotti", (event) => {
+  let filePath = 'C:\\ElectronVueTest\\db.json';
+
+  // Verifica se il file esiste
+  if (!fs.existsSync('C:\\ElectronVueTest')) {
+    try {
+      fs.mkdirSync('C:\\ElectronVueTest');
+    } catch (err) {
+      console.error('Errore durante la creazione del file:', err);
+      return [];
+    }
+  }
+  if (!fs.existsSync(filePath)) {
+    try {
+      fs.writeFileSync(filePath, JSON.stringify([]));
+    } catch (err) {
+      console.error('Errore durante la creazione del file:', err);
+      return [];
+    }
+  }
+  // Leggi il contenuto del file
+  try {
+    let data = fs.readFileSync(filePath, 'utf-8');
+    return data;
+  } catch (err) {
+    console.error('Errore durante la lettura del file:', err);
+    return [];
+  }
+});
+ipcMain.on("setProdotto", (event, prodotti) => {
+  console.log(event);
+  fs.writeFileSync('C:\\ElectronVueTest\\db.json', prodotti, (err) => {
+    if (err) {
+      console.error(err)
+    }
+    console.log('Prodotto salvato');
+  })
+});
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
