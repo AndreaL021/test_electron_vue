@@ -82,14 +82,20 @@
         {{ p.desc }}
       </div>
       <div style="width: 25%" class="flex justify-center align-center">
-        <a :href="p.img" target="_blank">
-          <fa-i
-            class="fa-xl flex justify-center align-center"
-            v-if="p.img"
+        <fa-i
+          class="fa-xl flex justify-center align-center"
+          v-if="p.img == '' || p.img == null"
+          style="cursor: pointer; color: green"
+          @click="modifica(p)"
+          icon="image"
+        ></fa-i>
+        <a v-else :href="p.img" target="_blank">
+          <img
+            :src="p.img"
+            width="100px"
             style="cursor: pointer; color: green"
-            icon="image"
-          ></fa-i
-        ></a>
+          />
+        </a>
       </div>
       <div style="width: 25%" class="flex justify-center align-center">
         <fa-i
@@ -276,9 +282,6 @@ export default {
     headers: ["Modifica", "Id", "Nome", "Desc", "Img", "Elimina"],
   }),
   watch: {
-    // prodotti_totali(newVal) {
-    //   this.prodotti = Array.from(newVal);
-    // },
     dialog_edit(newValue) {
       if (newValue) {
         document.body.classList.add("body-no-scroll");
@@ -365,10 +368,10 @@ export default {
     },
     async getProdotti() {
       await this.$store.dispatch("getProdotti").then((res) => {
-        console.log(res);
+        // console.log(res);
         this.prodotti_totali = res;
         this.prodotti = Array.from(this.prodotti_totali);
-        console.log(this.prodotti);
+        // console.log(this.prodotti);
       });
     },
   },

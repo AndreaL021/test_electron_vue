@@ -12,6 +12,7 @@ async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
     fullscreenable: true,
+    icon: 'favicon.ico',
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -61,12 +62,13 @@ app.on('ready', async () => {
   createWindow()
 })
 ipcMain.handle("getProdotti", (event) => {
-  let filePath = 'C:\\ElectronVueTest\\db.json';
+  let folderPath = path.resolve('.', 'DB');
+  let filePath = path.resolve('.', 'DB\\db.json');
 
   // Verifica se il file esiste
-  if (!fs.existsSync('C:\\ElectronVueTest')) {
+  if (!fs.existsSync(folderPath)) {
     try {
-      fs.mkdirSync('C:\\ElectronVueTest');
+      fs.mkdirSync(folderPath);
     } catch (err) {
       console.error('Errore durante la creazione del file:', err);
       return [];
@@ -90,12 +92,12 @@ ipcMain.handle("getProdotti", (event) => {
   }
 });
 ipcMain.on("setProdotto", (event, prodotti) => {
-  console.log(event);
-  fs.writeFileSync('C:\\ElectronVueTest\\db.json', prodotti, (err) => {
+  let filePath = path.resolve('.', 'DB\\db.json');
+  fs.writeFileSync(filePath, prodotti, (err) => {
     if (err) {
       console.error(err)
     }
-    console.log('Prodotto salvato');
+    // console.log('Prodotto salvato');
   })
 });
 

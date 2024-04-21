@@ -4,6 +4,7 @@
     "email": "lopassoandrea1@gmail.com",
     "url": "https://andrealopasso.it"
   },
+  "description": "App di test",
   "name": "test_electron_vue",
   "version": "0.1.0",
   "private": true,

@@ -4,9 +4,6 @@ module.exports = defineConfig({
   pluginOptions: {
     electronBuilder: {
       nodeIntegration: true,
-      builderOptions: {
-        extraResources: ["db.json"],
-      },
     },
   },
 })
