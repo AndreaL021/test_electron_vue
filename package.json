@@ -5,7 +5,7 @@
     "url": "https://andrealopasso.it"
   },
   "description": "App di test",
-  "name": "test_electron_vue",
+  "name": "electron_vue_test_app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
