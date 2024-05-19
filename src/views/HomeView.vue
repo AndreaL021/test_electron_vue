@@ -146,7 +146,11 @@
           </button>
         </div>
         <div class="card-text">
-          <v-input v-model="selected_item.nome" label="Nome" :required="true"></v-input>
+          <v-input
+            v-model="selected_item.nome"
+            label="Nome"
+            :required="true"
+          ></v-input>
           <v-input v-model="selected_item.desc" label="Descrizione"></v-input>
           <img
             @click="handleImageUpload(selected_item)"
